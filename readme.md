@@ -6,7 +6,6 @@ Project Laundry adalah program untuk mengatur proses bisnis di laundry. Sekaligu
 
 ```git
 git clone https://github.com/azizrosyid/project-laundry
-
 ```
 
 
