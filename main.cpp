@@ -10,12 +10,12 @@ int main() {
     string itemDescription;
     int itemKg;
 
-    cout << "Selamat Datang di Laundry" << endl;
-    cout << "1. Tambah Pesanan" << endl;
-    cout << "2. Lihat daftar Pesanan" << endl;
-    cout << "3. Edit Pesanan" << endl;
-    cout << "4. Hapus Pesanan" << endl;
-    cout << "Silahkan Pilih Menu : ";
+    cout << "Selamat Datang di Laundry" << endl
+         << "1. Tambah Pesanan" << endl
+         << "2. Lihat daftar Pesanan" << endl
+         << "3. Edit Pesanan" << endl
+         << "4. Hapus Pesanan" << endl
+         << "Silahkan Pilih Menu : ";
     cin >> choice;
 
     if (choice == 1) {
@@ -28,14 +28,20 @@ int main() {
         cout << "Nomor HP   : ";
         getline(cin, customerPhone);
 
-        cout << "Silahkan Masukkan Data Pakaian"<<endl;
+        cout << "Silahkan Masukkan Data Pakaian" << endl;
         cout << "Jumlah Pakaian     : ";
         cin >> itemNumber;
         cout << "Deskripsi Pakaian  : ";
         cin.ignore();
-        getline(cin,itemDescription);
+        getline(cin, itemDescription);
         cout << "Berat Pakaian (Kg) : ";
         cin >> itemKg;
+
+        cout << "Masukkan Paket yang dipilih : " << endl
+             << "1. Paket Kilat (1 Hari Jadi) 5000/Kg" << endl
+             << "2. Paket Cepat (2 Hari Jadi) 3000 / Kg" << endl
+             << "3. Paket Lambat (5 Hari Jadi) 2000 / Kg";
+        cin >> choice;
     }
 
     return 0;
