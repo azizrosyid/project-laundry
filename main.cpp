@@ -1,15 +1,27 @@
+#include <ctime>
+#include <fstream>
 #include <iostream>
+#include <sstream>
+#include <vector>
 using namespace std;
+
+ifstream inFile;
+ofstream outFile;
 
 int main() {
     int choice;
     string customerName;
     string customerAddress;
     string customerPhone;
+    string strItemNumber;
     int itemNumber;
     string itemDescription;
     int itemKg;
     int priceLaundry;
+    int timeInDay = 24 * 60 * 60;
+    time_t timeOrder;
+    int timeDone;
+    vector<int> delimeter;
 
     cout << "Selamat Datang di Laundry" << endl
          << "1. Tambah Pesanan" << endl
@@ -48,13 +60,57 @@ int main() {
         cin >> variant;
         if (variant == 1) {
             priceLaundry = 5000 * itemKg;
+            timeDone = timeInDay * 1;
         } else if (variant == 2) {
             priceLaundry = 3000 * itemKg;
+            timeDone = timeInDay * 2;
         } else if (variant == 3) {
             priceLaundry = 2000 * itemKg;
+            timeDone = timeInDay * 5;
         }
 
         cout << "Total Harga Adalah " << priceLaundry << endl;
+        timeOrder = time(0);
+        timeDone += timeOrder;
+
+        outFile.open("laundry.txt");
+        outFile << customerName << "|" << customerAddress << "|";
+        outFile << customerPhone << "|" << itemNumber << "|";
+        outFile << itemDescription << "|" << itemKg << "|";
+        outFile << variant << "|" << priceLaundry << "|";
+        outFile << timeOrder << "|" << timeDone << endl;
+        outFile.close();
+    } else if (choice == 2) {
+        cout << "Lihat Daftar Pesanan : " << endl;
+        inFile.open("laundry.txt");
+        string strFile;
+        while (!inFile.eof()) {
+            getline(inFile, strFile);
+            if (strFile.empty()) {
+                break;
+            }
+            for (int i = 0; i < 9; i++) {
+                if (i == 0) {
+                    delimeter.push_back(strFile.find('|'));
+                } else if (i != 0) {
+                    delimeter.push_back(strFile.find('|', delimeter[i - 1] + 1));
+                }
+            }
+
+            customerName = strFile.substr(0, delimeter[0]);
+            customerAddress = strFile.substr(delimeter[0] + 1, delimeter[1] - delimeter[0] - 1);
+            customerPhone = strFile.substr(delimeter[1] + 1, delimeter[2] - delimeter[1] - 1);
+            strItemNumber = strFile.substr(delimeter[2] + 1, delimeter[3] - delimeter[2] - 1);
+            stringstream strToNumber(strItemNumber);
+            strToNumber >> itemNumber;
+
+            itemDescription = strFile.substr(delimeter[2] + 1, delimeter[3] - delimeter[2] - 1);
+            cout << customerName << endl;
+            cout << customerAddress << endl;
+            cout << customerPhone << endl;
+            cout << itemNumber << endl;
+            cout << itemDescription << endl;
+        }
     }
 
     return 0;
