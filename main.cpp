@@ -9,6 +9,7 @@ int main() {
     int itemNumber;
     string itemDescription;
     int itemKg;
+    int priceLaundry;
 
     cout << "Selamat Datang di Laundry" << endl
          << "1. Tambah Pesanan" << endl
@@ -40,8 +41,20 @@ int main() {
         cout << "Masukkan Paket yang dipilih : " << endl
              << "1. Paket Kilat (1 Hari Jadi) 5000/Kg" << endl
              << "2. Paket Cepat (2 Hari Jadi) 3000 / Kg" << endl
-             << "3. Paket Lambat (5 Hari Jadi) 2000 / Kg";
-        cin >> choice;
+             << "3. Paket Lambat (5 Hari Jadi) 2000 / Kg" << endl
+             << "Paket Nomor [1-3] : ";
+
+        int &variant = choice;
+        cin >> variant;
+        if (variant == 1) {
+            priceLaundry = 5000 * itemKg;
+        } else if (variant == 2) {
+            priceLaundry = 3000 * itemKg;
+        } else if (variant == 3) {
+            priceLaundry = 2000 * itemKg;
+        }
+
+        cout << "Total Harga Adalah " << priceLaundry << endl;
     }
 
     return 0;
