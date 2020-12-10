@@ -1,5 +1,6 @@
 #include <ctime>
 #include <fstream>
+#include <iomanip>
 #include <iostream>
 #include <sstream>
 #include <vector>
@@ -46,7 +47,9 @@ int main() {
         cout << "Alamat     : ";
         getline(cin, customerAddress);
         cout << "Nomor HP   : ";
-        getline(cin, customerPhone);
+        do {
+            getline(cin, customerPhone);
+        } while (customerPhone.length() >= 14);
 
         cout << "Silahkan Masukkan Data Pakaian" << endl;
         cout << "Jumlah Pakaian     : ";
@@ -90,6 +93,7 @@ int main() {
         cout << "Lihat Daftar Pesanan : " << endl;
         inFile.open("laundry.txt");
         string strFile;
+        cout << setw(17) << left << "Nama" << setw(15) << "Nomor HP" << setw(8) << "Berat" << setw(10) << right << "Batas Tanggal" << endl;
         while (!inFile.eof()) {
             getline(inFile, strFile);
             if (strFile.empty()) {
@@ -112,7 +116,7 @@ int main() {
             itemNumber = stringToInteger(strNumber);
 
             itemDescription = strFile.substr(delimeter[3] + 1, delimeter[4] - delimeter[3] - 1);
-            strNumber = strFile.substr(delimeter[4] + 1, delimeter[5] - delimeter[4] - 1);
+            string strItemKg = strFile.substr(delimeter[4] + 1, delimeter[5] - delimeter[4] - 1);
             itemKg = stringToInteger(strNumber);
 
             strNumber = strFile.substr(delimeter[5] + 1, delimeter[6] - delimeter[5] - 1);
@@ -127,16 +131,22 @@ int main() {
             strNumber = strFile.substr(delimeter[8] + 1);
             timeDone = stringToInteger(strNumber);
 
-            cout << customerName << endl;
-            cout << customerAddress << endl;
-            cout << customerPhone << endl;
-            cout << itemNumber << endl;
-            cout << itemDescription << endl;
-            cout << itemKg << endl;
-            cout << variant << endl;
-            cout << priceLaundry << endl;
-            cout << timeOrder << endl;
-            cout << timeDone << endl;
+            time_t rawTime = timeDone;
+            struct tm *timeinfo;
+            timeinfo = localtime(&rawTime);
+
+            cout << setw(17) << left << customerName.substr(0, 15) << setw(15) << customerPhone << setw(8) << strItemKg.append(" Kg") << setw(10) << right << timeDone << endl;
+
+            // cout << customerName << endl;
+            // cout << customerAddress << endl;
+            // cout << customerPhone << endl;
+            // cout << itemNumber << endl;
+            // cout << itemDescription << endl;
+            // cout << itemKg << endl;
+            // cout << variant << endl;
+            // cout << priceLaundry << endl;
+            // cout << timeOrder << endl;
+            // cout << timeDone << endl;
         }
     }
 
