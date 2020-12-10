@@ -8,15 +8,23 @@ using namespace std;
 ifstream inFile;
 ofstream outFile;
 
+int stringToInteger(string &strConvert) {
+    int result;
+    stringstream stringToInteger(strConvert);
+    stringToInteger >> result;
+    return result;
+}
+
 int main() {
     int choice;
     string customerName;
     string customerAddress;
     string customerPhone;
-    string strItemNumber;
+    string strNumber;
     int itemNumber;
     string itemDescription;
     int itemKg;
+    int variant;
     int priceLaundry;
     int timeInDay = 24 * 60 * 60;
     time_t timeOrder;
@@ -56,7 +64,6 @@ int main() {
              << "3. Paket Lambat (5 Hari Jadi) 2000 / Kg" << endl
              << "Paket Nomor [1-3] : ";
 
-        int &variant = choice;
         cin >> variant;
         if (variant == 1) {
             priceLaundry = 5000 * itemKg;
@@ -100,16 +107,36 @@ int main() {
             customerName = strFile.substr(0, delimeter[0]);
             customerAddress = strFile.substr(delimeter[0] + 1, delimeter[1] - delimeter[0] - 1);
             customerPhone = strFile.substr(delimeter[1] + 1, delimeter[2] - delimeter[1] - 1);
-            strItemNumber = strFile.substr(delimeter[2] + 1, delimeter[3] - delimeter[2] - 1);
-            stringstream strToNumber(strItemNumber);
-            strToNumber >> itemNumber;
 
-            itemDescription = strFile.substr(delimeter[2] + 1, delimeter[3] - delimeter[2] - 1);
+            strNumber = strFile.substr(delimeter[2] + 1, delimeter[3] - delimeter[2] - 1);
+            itemNumber = stringToInteger(strNumber);
+
+            itemDescription = strFile.substr(delimeter[3] + 1, delimeter[4] - delimeter[3] - 1);
+            strNumber = strFile.substr(delimeter[4] + 1, delimeter[5] - delimeter[4] - 1);
+            itemKg = stringToInteger(strNumber);
+
+            strNumber = strFile.substr(delimeter[5] + 1, delimeter[6] - delimeter[5] - 1);
+            variant = stringToInteger(strNumber);
+
+            strNumber = strFile.substr(delimeter[6] + 1, delimeter[7] - delimeter[6] - 1);
+            priceLaundry = stringToInteger(strNumber);
+
+            strNumber = strFile.substr(delimeter[7] + 1, delimeter[8] - delimeter[7] - 1);
+            timeOrder = stringToInteger(strNumber);
+
+            strNumber = strFile.substr(delimeter[8] + 1);
+            timeDone = stringToInteger(strNumber);
+
             cout << customerName << endl;
             cout << customerAddress << endl;
             cout << customerPhone << endl;
             cout << itemNumber << endl;
             cout << itemDescription << endl;
+            cout << itemKg << endl;
+            cout << variant << endl;
+            cout << priceLaundry << endl;
+            cout << timeOrder << endl;
+            cout << timeDone << endl;
         }
     }
 
