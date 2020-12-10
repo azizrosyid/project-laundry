@@ -29,7 +29,6 @@ int main() {
     int timeInDay = 24 * 60 * 60;
     time_t timeOrder;
     int timeDone;
-    vector<int> delimeter;
 
     cout << "Selamat Datang di Laundry" << endl
          << "1. Tambah Pesanan" << endl
@@ -80,7 +79,7 @@ int main() {
         timeOrder = time(0);
         timeDone += timeOrder;
 
-        outFile.open("laundry.txt");
+        outFile.open("laundry.txt", ios::app);
         outFile << customerName << "|" << customerAddress << "|";
         outFile << customerPhone << "|" << itemNumber << "|";
         outFile << itemDescription << "|" << itemKg << "|";
@@ -96,6 +95,7 @@ int main() {
             if (strFile.empty()) {
                 break;
             }
+            vector<int> delimeter;
             for (int i = 0; i < 9; i++) {
                 if (i == 0) {
                     delimeter.push_back(strFile.find('|'));
