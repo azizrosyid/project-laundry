@@ -9,13 +9,6 @@ using namespace std;
 ifstream inFile;
 ofstream outFile;
 
-int stringToInteger(string &strConvert) {
-    int result;
-    stringstream stringToInteger(strConvert);
-    stringToInteger >> result;
-    return result;
-}
-
 int main() {
     int choice;
     string customerName;
@@ -29,7 +22,7 @@ int main() {
     int priceLaundry;
     int timeInDay = 24 * 60 * 60;
     time_t timeOrder;
-    int timeDone;
+    time_t timeDone;
 
     cout << "Selamat Datang di Laundry" << endl
          << "1. Tambah Pesanan" << endl
@@ -97,7 +90,6 @@ int main() {
     } else if (choice == 2) {
         cout << "Lihat Daftar Pesanan : " << endl;
         inFile.open("laundry.txt");
-        string strFile;
         cout << setw(17) << left << "Nama" << setw(15) << "Nomor HP" << setw(8) << "Berat" << setw(10) << right << "Batas Tanggal" << endl;
         while (inFile.read(reinterpret_cast<char *>(&customerName), sizeof(customerName))) {
             inFile.read(reinterpret_cast<char *>(&customerAddress), sizeof(customerAddress));
