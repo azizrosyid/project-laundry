@@ -131,22 +131,7 @@ int main() {
             strNumber = strFile.substr(delimeter[8] + 1);
             timeDone = stringToInteger(strNumber);
 
-            time_t rawTime = timeDone;
-            struct tm *timeinfo;
-            timeinfo = localtime(&rawTime);
-
             cout << setw(17) << left << customerName.substr(0, 15) << setw(15) << customerPhone << setw(8) << strItemKg.append(" Kg") << setw(10) << right << timeDone << endl;
-
-            // cout << customerName << endl;
-            // cout << customerAddress << endl;
-            // cout << customerPhone << endl;
-            // cout << itemNumber << endl;
-            // cout << itemDescription << endl;
-            // cout << itemKg << endl;
-            // cout << variant << endl;
-            // cout << priceLaundry << endl;
-            // cout << timeOrder << endl;
-            // cout << timeDone << endl;
         }
     }
 
