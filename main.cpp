@@ -83,57 +83,37 @@ int main() {
         timeDone += timeOrder;
 
         outFile.open("laundry.txt", ios::app);
-        outFile << customerName << "|" << customerAddress << "|";
-        outFile << customerPhone << "|" << itemNumber << "|";
-        outFile << itemDescription << "|" << itemKg << "|";
-        outFile << variant << "|" << priceLaundry << "|";
-        outFile << timeOrder << "|" << timeDone << endl;
+        outFile.write(reinterpret_cast<char *>(&customerName), sizeof(customerName));
+        outFile.write(reinterpret_cast<char *>(&customerAddress), sizeof(customerAddress));
+        outFile.write(reinterpret_cast<char *>(&customerPhone), sizeof(customerPhone));
+        outFile.write(reinterpret_cast<char *>(&itemNumber), sizeof(itemNumber));
+        outFile.write(reinterpret_cast<char *>(&itemDescription), sizeof(itemDescription));
+        outFile.write(reinterpret_cast<char *>(&itemKg), sizeof(itemKg));
+        outFile.write(reinterpret_cast<char *>(&variant), sizeof(variant));
+        outFile.write(reinterpret_cast<char *>(&priceLaundry), sizeof(priceLaundry));
+        outFile.write(reinterpret_cast<char *>(&timeOrder), sizeof(timeOrder));
+        outFile.write(reinterpret_cast<char *>(&timeDone), sizeof(timeDone));
         outFile.close();
     } else if (choice == 2) {
         cout << "Lihat Daftar Pesanan : " << endl;
         inFile.open("laundry.txt");
         string strFile;
         cout << setw(17) << left << "Nama" << setw(15) << "Nomor HP" << setw(8) << "Berat" << setw(10) << right << "Batas Tanggal" << endl;
-        while (!inFile.eof()) {
-            getline(inFile, strFile);
-            if (strFile.empty()) {
-                break;
-            }
-            vector<int> delimeter;
-            for (int i = 0; i < 9; i++) {
-                if (i == 0) {
-                    delimeter.push_back(strFile.find('|'));
-                } else if (i != 0) {
-                    delimeter.push_back(strFile.find('|', delimeter[i - 1] + 1));
-                }
-            }
-
-            customerName = strFile.substr(0, delimeter[0]);
-            customerAddress = strFile.substr(delimeter[0] + 1, delimeter[1] - delimeter[0] - 1);
-            customerPhone = strFile.substr(delimeter[1] + 1, delimeter[2] - delimeter[1] - 1);
-
-            strNumber = strFile.substr(delimeter[2] + 1, delimeter[3] - delimeter[2] - 1);
-            itemNumber = stringToInteger(strNumber);
-
-            itemDescription = strFile.substr(delimeter[3] + 1, delimeter[4] - delimeter[3] - 1);
-            string strItemKg = strFile.substr(delimeter[4] + 1, delimeter[5] - delimeter[4] - 1);
-            itemKg = stringToInteger(strNumber);
-
-            strNumber = strFile.substr(delimeter[5] + 1, delimeter[6] - delimeter[5] - 1);
-            variant = stringToInteger(strNumber);
-
-            strNumber = strFile.substr(delimeter[6] + 1, delimeter[7] - delimeter[6] - 1);
-            priceLaundry = stringToInteger(strNumber);
-
-            strNumber = strFile.substr(delimeter[7] + 1, delimeter[8] - delimeter[7] - 1);
-            timeOrder = stringToInteger(strNumber);
-
-            strNumber = strFile.substr(delimeter[8] + 1);
-            timeDone = stringToInteger(strNumber);
-
-            cout << setw(17) << left << customerName.substr(0, 15) << setw(15) << customerPhone << setw(8) << strItemKg.append(" Kg") << setw(10) << right << timeDone << endl;
+        while (inFile.read(reinterpret_cast<char *>(&customerName), sizeof(customerName))) {
+            inFile.read(reinterpret_cast<char *>(&customerAddress), sizeof(customerAddress));
+            inFile.read(reinterpret_cast<char *>(&customerPhone), sizeof(customerPhone));
+            inFile.read(reinterpret_cast<char *>(&itemNumber), sizeof(itemNumber));
+            inFile.read(reinterpret_cast<char *>(&itemDescription), sizeof(itemDescription));
+            inFile.read(reinterpret_cast<char *>(&itemKg), sizeof(itemKg));
+            inFile.read(reinterpret_cast<char *>(&variant), sizeof(variant));
+            inFile.read(reinterpret_cast<char *>(&priceLaundry), sizeof(priceLaundry));
+            inFile.read(reinterpret_cast<char *>(&timeOrder), sizeof(timeOrder));
+            inFile.read(reinterpret_cast<char *>(&timeDone), sizeof(timeDone));
+            cout << setw(17) << left << customerName.substr(0, 15) << setw(15) << customerPhone << setw(8) << itemKg << setw(10) << right << timeDone << endl;
         }
+        inFile.close();
     }
+    
 
     return 0;
 }
