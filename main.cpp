@@ -120,6 +120,22 @@ void showTransaction(string searchValue = "") {
     }
 }
 
+void showDetailTransaction(int indexVector) {
+    Laundry &detailOrder = arrCustomer[indexVector - 1].order;
+    cout << "Detail Customer" << endl;
+    cout << "Nama       : " << arrCustomer[indexVector - 1].name << endl;
+    cout << "Alamat     : " << arrCustomer[indexVector - 1].address << endl;
+    cout << "Nomor HP   : " << arrCustomer[indexVector - 1].phone << endl;
+    cout << "Detail Pesanan" << endl;
+    cout << "Jumlah Pakaian     : " << detailOrder.number << endl;
+    cout << "Deskripsi Pakaian  : " << detailOrder.description << endl;
+    cout << "Berat Pakaian (Kg) : " << detailOrder.itemKg << endl;
+    cout << "Pilihan Paket      : " << detailOrder.variant << endl;
+    cout << "Total Harga        : " << detailOrder.priceLaundry << endl;
+    cout << "Tanggal Order      : " << detailOrder.timeOrder << endl;
+    cout << "Deadline Laundry   : " << detailOrder.timeDone << endl;
+}
+
 int main() {
     int choice;
     int timeInDay = 24 * 60 * 60;
@@ -212,19 +228,7 @@ int main() {
             } else if (choice == 2) {
                 cout << "Masukkan Nomor Pesanan : ";
                 cin >> choice;
-                Laundry detailOrder = arrCustomer[choice - 1].order;
-                cout << "Detail Customer" << endl;
-                cout << "Nama       : " << arrCustomer[choice - 1].name << endl;
-                cout << "Alamat     : " << arrCustomer[choice - 1].address << endl;
-                cout << "Nomor HP   : " << arrCustomer[choice - 1].phone << endl;
-                cout << "Detail Pesanan" << endl;
-                cout << "Jumlah Pakaian     : " << detailOrder.number << endl;
-                cout << "Deskripsi Pakaian  : " << detailOrder.description << endl;
-                cout << "Berat Pakaian (Kg) : " << detailOrder.itemKg << endl;
-                cout << "Pilihan Paket      : " << detailOrder.variant << endl;
-                cout << "Total Harga        : " << detailOrder.priceLaundry << endl;
-                cout << "Tanggal Order      : " << detailOrder.timeOrder << endl;
-                cout << "Deadline Laundry   : " << detailOrder.timeDone << endl;
+                showDetailTransaction(choice);
             }
         } while (choice != 0);
     }
