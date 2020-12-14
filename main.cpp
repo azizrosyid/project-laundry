@@ -93,16 +93,17 @@ void readData() {
 void saveData() {
     outFile.open("laundry.txt");
     for (int i = 0; i < arrCustomer.size(); i++) {
+        Laundry &saveOrder = arrCustomer[i].order;
         outFile << arrCustomer[i].name << endl;
         outFile << arrCustomer[i].address << endl;
         outFile << arrCustomer[i].phone << endl;
-        outFile << arrCustomer[i].order.number << endl;
-        outFile << arrCustomer[i].order.description << endl;
-        outFile << arrCustomer[i].order.itemKg << endl;
-        outFile << arrCustomer[i].order.variant << endl;
-        outFile << arrCustomer[i].order.priceLaundry << endl;
-        outFile << arrCustomer[i].order.timeOrder << endl;
-        outFile << arrCustomer[i].order.timeDone << endl;
+        outFile << saveOrder.number << endl;
+        outFile << saveOrder.description << endl;
+        outFile << saveOrder.itemKg << endl;
+        outFile << saveOrder.variant << endl;
+        outFile << saveOrder.priceLaundry << endl;
+        outFile << saveOrder.timeOrder << endl;
+        outFile << saveOrder.timeDone << endl;
     }
     outFile.close();
 }
