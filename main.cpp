@@ -43,9 +43,16 @@ int priceLaundry;
 time_t timeOrder;
 time_t timeDone;
 
-void stringToInteger(string &tempString, int &resultConvert) {
+void convertToInteger(string &tempString, int &resultConvert) {
     stringstream tempInteger(tempString);  // inisiasi stringstream
     tempInteger >> resultConvert;          // convert str ke int
+}
+
+string parseTime(const time_t &timestamp) {
+    tm *structTime = localtime(&timestamp);
+    stringstream ss;
+    ss << structTime->tm_mday << "-" << structTime->tm_mon + 1 << "-" << structTime->tm_year + 1900;
+    return ss.str();
 }
 
 void readData() {
@@ -55,14 +62,14 @@ void readData() {
         getline(inFile, customerAddress);
         getline(inFile, customerPhone);
         getline(inFile, tempString);
-        stringToInteger(tempString, itemNumber);
+        convertToInteger(tempString, itemNumber);
         getline(inFile, itemDescription);
         getline(inFile, tempString);
-        stringToInteger(tempString, itemKg);
+        convertToInteger(tempString, itemKg);
         getline(inFile, tempString);
-        stringToInteger(tempString, variant);
+        convertToInteger(tempString, variant);
         getline(inFile, tempString);
-        stringToInteger(tempString, priceLaundry);
+        convertToInteger(tempString, priceLaundry);
         getline(inFile, tempString);
         const char *tempTimeOrder = tempString.c_str();
         timeOrder = (time_t)strtol(tempTimeOrder, NULL, 10);
@@ -113,10 +120,10 @@ void showTransaction(string searchValue = "") {
     for (int i = 0; i < arrCustomer.size(); i++) {
         if (!searchValue.empty()) {
             if (arrCustomer[i].name == searchValue || arrCustomer[i].phone == searchValue || arrCustomer[i].address == searchValue) {
-                cout << left << setw(5) << i + 1 << setw(17) << arrCustomer[i].name.substr(0, 15) << setw(15) << arrCustomer[i].phone << setw(8) << arrCustomer[i].order.itemKg << setw(10) << right << arrCustomer[i].order.timeDone << endl;
+                cout << left << setw(5) << i + 1 << setw(17) << arrCustomer[i].name.substr(0, 15) << setw(15) << arrCustomer[i].phone << setw(8) << arrCustomer[i].order.itemKg << setw(10) << right << parseTime(arrCustomer[i].order.timeDone) << endl;
             }
         } else if (searchValue.empty()) {
-            cout << left << setw(5) << i + 1 << setw(17) << arrCustomer[i].name.substr(0, 15) << setw(15) << arrCustomer[i].phone << setw(8) << arrCustomer[i].order.itemKg << setw(10) << right << arrCustomer[i].order.timeDone << endl;
+            cout << left << setw(5) << i + 1 << setw(17) << arrCustomer[i].name.substr(0, 15) << setw(15) << arrCustomer[i].phone << setw(8) << arrCustomer[i].order.itemKg << setw(10) << right << parseTime(arrCustomer[i].order.timeDone) << endl;
         }
     }
 }
@@ -133,8 +140,8 @@ void showDetailTransaction(int indexVector) {
     cout << "Berat Pakaian (Kg) : " << detailOrder.itemKg << endl;
     cout << "Pilihan Paket      : " << detailOrder.variant << endl;
     cout << "Total Harga        : " << detailOrder.priceLaundry << endl;
-    cout << "Tanggal Order      : " << detailOrder.timeOrder << endl;
-    cout << "Deadline Laundry   : " << detailOrder.timeDone << endl;
+    cout << "Tanggal Order      : " << parseTime(detailOrder.timeOrder) << endl;
+    cout << "Deadline Laundry   : " << parseTime(detailOrder.timeDone) << endl;
 }
 
 int main() {
