@@ -239,7 +239,74 @@ int main() {
                 showDetailTransaction(choice);
             }
         } while (choice != 0);
-    }
+    } else if (choice == 3) {
+        cout << "Table Daftar Pesanan" << endl;
+        showTransaction();
+        cout << "Pilih Data : ";
+        cin >> choice;
+        showDetailTransaction(choice);
+        do {
+        	cout << "Data Yang Ingin Diubah : " << endl;
+        	cout << "1. Nama" << endl;
+        	cout << "2. Alamat" << endl;
+        	cout << "3. Nomor HP" << endl;
+        	cout << "4. Jumlah Pakaian" << endl;
+        	cout << "5. Deskripsi Pakaian" << endl;
+        	cout << "6. Berat Pakaian (Kg)" << endl;
+        	cout << "7. Pilihan Paket" << endl;
+        	cout << "0. Keluar" << endl;
+        	cout << "Pilih Data : ";
+        	cin >> choose;
+        	cin.ignore();
+        	if (choose == 1) {
+        		cout << "Nama : ";
+        		getline(cin, arrCustomer[choice-1].name);
+    		} else if (choose == 2) {
+    			cout << "Alamat : "; 
+    			getline(cin, arrCustomer[choice-1].address);
+    		} else if (choose == 3) {
+    			cout << "Nomor HP : ";
+    			getline(cin, arrCustomer[choice-1].phone);
+    		} else if (choose == 4) {
+    			cout << "Jumlah Pakaian : ";
+    			cin >> arrCustomer[choice-1].order.number;
+    		} else if (choose == 5) {
+    			cout << "Deskripsi Pakaian : ";
+    			getline(cin, arrCustomer[choice-1].order.description);
+    		} else if (choose == 6) {
+    			cout << "Berat Pakaian (Kg) : ";
+    			cin >> arrCustomer[choice-1].order.itemKg;
+    		} else if (choose == 7) {
+    			cout << "Masukkan Paket yang dipilih : " << endl
+             		 << "1. Paket Kilat (1 Hari Jadi) 5000/Kg" << endl
+             		 << "2. Paket Cepat (2 Hari Jadi) 3000 / Kg" << endl
+             		 << "3. Paket Lambat (5 Hari Jadi) 2000 / Kg" << endl
+            	 	 << "Paket Nomor [1-3] : ";
+            	cin >> arrCustomer[choice-1].order.variant;
+        if (arrCustomer[choice-1].order.variant == 1) {
+            arrCustomer[choice-1].order.priceLaundry = 5000 * arrCustomer[choice-1].order.itemKg;
+            timeDone = timeInDay * 1;
+        } else if (arrCustomer[choice-1].order.variant == 2) {
+            arrCustomer[choice-1].order.priceLaundry = 3000 * arrCustomer[choice-1].order.itemKg;
+            timeDone = timeInDay * 2;
+        } else if (arrCustomer[choice-1].order.variant == 3) {
+            arrCustomer[choice-1].order.priceLaundry = 2000 * arrCustomer[choice-1].order.itemKg;
+            timeDone = timeInDay * 5;
+        }
 
+        cout << "Total Harga Adalah " << arrCustomer[choice-1].order.priceLaundry << endl;
+       		arrCustomer[choice-1].order.timeOrder = time(0);
+			arrCustomer[choice-1].order.timeDone += arrCustomer[choice-1].order.timeOrder;
+    		}
+    	saveData();
+    	} while (choose != 0); 
+    } else if (choice == 4) {
+    	cout << "Table Daftar Pesanan" << endl;
+        showTransaction();
+        cout << "Pilih Data Yang Ingin Dihapus: ";
+        cin >> choice;
+        arrCustomer.erase(arrCustomer.begin() + choice);
+        saveData();	
+    }
     return 0;
 }
