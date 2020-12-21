@@ -6,7 +6,8 @@ Axel Wahyudi|Panjatan|081691927059|3|Rompi, Kaos|1|4|18000|1607149952|1608532352
 Izhar Chaerunnisa|Ngemplak|081620882091|10|Baju, Kaos Kaki, Dasi, Celana Pendek, Kemeja|8|4|18000|1606998752|1608532352
 Lintang Shalimah|Jetis|087714918123|11|Jaket, Dasi, Baju Tidur, Rok, Mantel, Kemeja, Celana Pendek, Jas|10|4|18000|1608280352|1608532352
 Rezky Qosthory|Kokap|083842864737|19|Jaket, Piyama, Celana, Rompi, Baju, Kaos Kaki, Dasi, Baju Tidur, Gaun, Celana Pendek, Mantel, Kemeja, Jas|15|1|75000|1607139152|1607225552
-Yandra Febrianto|Gedang Sari|083829680150|18|Jaket, Piyama, Selimut, Celana, Kaos Kaki, Baju, Dasi, Kaos, Gaun, Rok, Mantel, Celana Pendek|16|1|80000|1607851952|1607938352Finaldi Josh|Dlingo|081577440438|19|Jaket, Piyama, Selimut, Celana, Rompi, Baju, Kaos, Gaun, Rok, Kemeja, Mantel, Jas, Blus|5|4|80000|1607311952|1607938352
+Yandra Febrianto|Gedang Sari|083829680150|18|Jaket, Piyama, Selimut, Celana, Kaos Kaki, Baju, Dasi, Kaos, Gaun, Rok, Mantel, Celana Pendek|16|1|80000|1607851952|1607938352
+Finaldi Josh|Dlingo|081577440438|19|Jaket, Piyama, Selimut, Celana, Rompi, Baju, Kaos, Gaun, Rok, Kemeja, Mantel, Jas, Blus|5|4|80000|1607311952|1607938352
 Bayu Purwanto|Jetis|082173053696|8|Selimut, Rompi, Baju, Gaun, Celana Pendek, Mantel, Kemeja|6|4|80000|1609155152|1607938352
 Cakra Rahman|Sentolo|082143250122|18|Piyama, Selimut, Celana, Rompi, Baju, Dasi, Baju Tidur, Gaun, Kaos, Rok, Kemeja, Jas, Blus|6|1|30000|1609155152|1609241552
 Kevin Oktafiyanti|Kretek|081638648395|19|Jaket, Piyama, Rompi, Baju, Kaos, Baju Tidur, Gaun, Celana Pendek, Mantel, Jas, Blus|2|4|30000|1609065152|1609241552
@@ -189,7 +190,8 @@ Cardito Balqis|Godean|087792525257|8|Selimut, Gaun, Mantel, Kaos, Blus, Rok|9|3|
 Arrivalda Rahma|Tanjungsari|082130766561|11|Piyama, Celana Pendek, Baju, Jaket, Gaun, Selimut, Kaos|10|3|20000|1607650541|1608082541
 Derilandry Rezky|Kalibawang|087769206444|5|Piyama, Celana, Kaos, Rok|5|1|25000|1607690141|1607776541
 Sigit Wahyuni|Kraton|081580815560|15|Celana Pendek, Baju, Rompi, Jas, Celana, Kaos, Blus, Kaos Kaki, Kemeja|8|3|16000|1608352541|1608784541
-Christian Fiona|Pengasih|087747255651|18|Celana Pendek, Piyama, Baju Tidur, Rompi, Selimut, Gaun, Mantel, Jas, Kaos Kaki, Dasi, Kemeja, Rok|3|1|15000|1608510941|1608597341Andhika Irwanto|Rongkop|082212676695|17|Celana Pendek, Piyama, Baju, Jaket, Rompi, Celana, Kemeja, Kaos Kaki, Dasi, Baju Tidur|1|2|3000|1609144541|1609317341
+Christian Fiona|Pengasih|087747255651|18|Celana Pendek, Piyama, Baju Tidur, Rompi, Selimut, Gaun, Mantel, Jas, Kaos Kaki, Dasi, Kemeja, Rok|3|1|15000|1608510941|1608597341
+Andhika Irwanto|Rongkop|082212676695|17|Celana Pendek, Piyama, Baju, Jaket, Rompi, Celana, Kemeja, Kaos Kaki, Dasi, Baju Tidur|1|2|3000|1609144541|1609317341
 Aprian Priyanto|Minggir|082155814037|12|Celana Pendek, Piyama, Baju, Jaket, Selimut, Kemeja, Baju Tidur, Kaos|8|3|16000|1609036541|1609468541
 Thomas Noverlia|Ngaglik|087727161804|6|Gaun, Mantel, Baju, Baju Tidur, Kaos|6|3|12000|1607402141|1607834141
 Adrian Yusuf|Ponjong|083806899162|10|Jaket, Gaun, Kaos, Blus, Kaos Kaki, Rok|2|1|10000|1607340941|1607427341
