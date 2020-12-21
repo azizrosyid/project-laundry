@@ -216,7 +216,7 @@ string parseTime(const time_t &timestamp) {
 
 void getlineInteger(istream &file, int &result) {
     string tempString;
-    getline(file, tempString, ',');
+    getline(file, tempString, '|');
     result = convertToInteger(tempString);
 }
 
@@ -233,11 +233,11 @@ void readData(vector<Customer> &arrCustomer) {
     string lineString;
     while (getline(inFile, lineString)) {
         istringstream line(lineString);
-        getline(line, dataCustomer.name, ',');
-        getline(line, dataCustomer.address, ',');
-        getline(line, dataCustomer.phone, ',');
+        getline(line, dataCustomer.name, '|');
+        getline(line, dataCustomer.address, '|');
+        getline(line, dataCustomer.phone, '|');
         getlineInteger(line, dataLaundry.number);
-        getline(line, dataLaundry.description, ',');
+        getline(line, dataLaundry.description, '|');
         getlineInteger(line, dataLaundry.itemKg);
         getlineInteger(line, dataLaundry.variant);
         getlineInteger(line, dataLaundry.priceLaundry);
@@ -253,16 +253,16 @@ void saveData(vector<Customer> &arrCustomer) {
     for (int i = 0; i < arrCustomer.size(); i++) {
         Customer &dataCustomer = arrCustomer[i];
         Laundry &dataLaundry = dataCustomer.order;
-        outFile << dataCustomer.name << ",";
-        outFile << dataCustomer.address << ",";
-        outFile << dataCustomer.phone << ",";
-        outFile << dataLaundry.number << ",";
-        outFile << dataLaundry.description << ",";
-        outFile << dataLaundry.itemKg << ",";
-        outFile << dataLaundry.variant << ",";
-        outFile << dataLaundry.priceLaundry << ",";
-        outFile << dataLaundry.timeOrder << ",";
-        outFile << dataLaundry.timeDone << ",";
+        outFile << dataCustomer.name << '|';
+        outFile << dataCustomer.address << '|';
+        outFile << dataCustomer.phone << '|';
+        outFile << dataLaundry.number << '|';
+        outFile << dataLaundry.description << '|';
+        outFile << dataLaundry.itemKg << '|';
+        outFile << dataLaundry.variant << '|';
+        outFile << dataLaundry.priceLaundry << '|';
+        outFile << dataLaundry.timeOrder << '|';
+        outFile << dataLaundry.timeDone << '|';
         outFile << endl;
     }
     outFile.close();
