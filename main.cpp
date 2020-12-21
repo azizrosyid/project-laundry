@@ -1,5 +1,3 @@
-#include <stdlib.h>
-
 #include <ctime>
 #include <fstream>
 #include <iomanip>
@@ -28,124 +26,104 @@ struct Customer {
     Laundry order;
 };
 
-// declare vector for struct Customer
-vector<Customer> arrCustomer;
-
-// declare variable global
-string customerName;
-string customerAddress;
-string customerPhone;
-int itemNumber;
-string itemDescription;
-int itemKg;
-int variant;
-int priceLaundry;
-time_t timeOrder;
-time_t timeDone;
-
-void convertToInteger(string &tempString, int &resultConvert) {
+int convertToInteger(string &tempString) {
+    int resultConvert;
     stringstream tempInteger(tempString);  // inisiasi stringstream
     tempInteger >> resultConvert;          // convert str ke int
+    return resultConvert;
 }
 
 string parseTime(const time_t &timestamp) {
     tm *structTime = localtime(&timestamp);
-    stringstream ss;
-    ss << structTime->tm_mday << "-" << structTime->tm_mon + 1 << "-" << structTime->tm_year + 1900;
-    return ss.str();
+    stringstream resultString;
+    resultString << structTime->tm_mday << "-" << structTime->tm_mon + 1 << "-" << structTime->tm_year + 1900;
+    return resultString.str();
 }
 
-void readData() {
+void getlineInteger(istream &file, int &result) {
     string tempString;
+    getline(file, tempString, ',');
+    result = convertToInteger(tempString);
+}
+
+void getlineTime(istream &file, time_t &result) {
+    int tempInteger;
+    getlineInteger(file, tempInteger);
+    result = (time_t)tempInteger;
+}
+
+void readData(vector<Customer> &arrCustomer) {
+    Customer dataCustomer;
+    Laundry &dataLaundry = dataCustomer.order;
     inFile.open("laundry.txt");
-    while (getline(inFile, customerName)) {
-        getline(inFile, customerAddress);
-        getline(inFile, customerPhone);
-        getline(inFile, tempString);
-        convertToInteger(tempString, itemNumber);
-        getline(inFile, itemDescription);
-        getline(inFile, tempString);
-        convertToInteger(tempString, itemKg);
-        getline(inFile, tempString);
-        convertToInteger(tempString, variant);
-        getline(inFile, tempString);
-        convertToInteger(tempString, priceLaundry);
-        getline(inFile, tempString);
-        const char *tempTimeOrder = tempString.c_str();
-        timeOrder = (time_t)strtol(tempTimeOrder, NULL, 10);
-        getline(inFile, tempString);
-        const char *tempTimeDone = tempString.c_str();
-        timeDone = (time_t)strtol(tempTimeDone, NULL, 10);
-
-        Laundry order = {
-            itemNumber,
-            itemDescription,
-            itemKg,
-            variant,
-            priceLaundry,
-            timeOrder,
-            timeDone};
-
-        Customer customer = {
-            customerName,
-            customerAddress,
-            customerPhone,
-            order};
-
-        arrCustomer.push_back(customer);
+    string lineString;
+    while (getline(inFile, lineString)) {
+        istringstream line(lineString);
+        getline(line, dataCustomer.name, ',');
+        getline(line, dataCustomer.address, ',');
+        getline(line, dataCustomer.phone, ',');
+        getlineInteger(line, dataLaundry.number);
+        getline(line, dataLaundry.description, ',');
+        getlineInteger(line, dataLaundry.itemKg);
+        getlineInteger(line, dataLaundry.variant);
+        getlineInteger(line, dataLaundry.priceLaundry);
+        getlineTime(line, dataLaundry.timeOrder);
+        getlineTime(line, dataLaundry.timeDone);
+        arrCustomer.push_back(dataCustomer);
     }
     inFile.close();
 }
 
-void saveData() {
+void saveData(vector<Customer> &arrCustomer) {
     outFile.open("laundry.txt");
     for (int i = 0; i < arrCustomer.size(); i++) {
-        Laundry &saveOrder = arrCustomer[i].order;
-        outFile << arrCustomer[i].name << endl;
-        outFile << arrCustomer[i].address << endl;
-        outFile << arrCustomer[i].phone << endl;
-        outFile << saveOrder.number << endl;
-        outFile << saveOrder.description << endl;
-        outFile << saveOrder.itemKg << endl;
-        outFile << saveOrder.variant << endl;
-        outFile << saveOrder.priceLaundry << endl;
-        outFile << saveOrder.timeOrder << endl;
-        outFile << saveOrder.timeDone << endl;
+        Customer &dataCustomer = arrCustomer[i];
+        Laundry &dataLaundry = dataCustomer.order;
+        outFile << dataCustomer.name << ",";
+        outFile << dataCustomer.address << ",";
+        outFile << dataCustomer.phone << ",";
+        outFile << dataLaundry.number << ",";
+        outFile << dataLaundry.description << ",";
+        outFile << dataLaundry.itemKg << ",";
+        outFile << dataLaundry.variant << ",";
+        outFile << dataLaundry.priceLaundry << ",";
+        outFile << dataLaundry.timeOrder << ",";
+        outFile << dataLaundry.timeDone << ",";
+        outFile << endl;
     }
     outFile.close();
 }
 
-void showTransaction(string searchValue = "") {
+void showTransaction(vector<Customer> &arrCustomer, string searchValue = "") {
     cout << left << setw(5) << "No." << setw(17) << "Nama" << setw(15) << "Nomor HP" << setw(8) << "Berat" << setw(10) << right << "Batas Tanggal" << endl;
     for (int i = 0; i < arrCustomer.size(); i++) {
-        if (!searchValue.empty()) {
-            if (arrCustomer[i].name == searchValue || arrCustomer[i].phone == searchValue || arrCustomer[i].address == searchValue) {
-                cout << left << setw(5) << i + 1 << setw(17) << arrCustomer[i].name.substr(0, 15) << setw(15) << arrCustomer[i].phone << setw(8) << arrCustomer[i].order.itemKg << setw(10) << right << parseTime(arrCustomer[i].order.timeDone) << endl;
-            }
-        } else if (searchValue.empty()) {
+        if (arrCustomer[i].name.find(searchValue) != -1 || arrCustomer[i].phone.find(searchValue) != -1 || arrCustomer[i].address.find(searchValue) != -1) {
             cout << left << setw(5) << i + 1 << setw(17) << arrCustomer[i].name.substr(0, 15) << setw(15) << arrCustomer[i].phone << setw(8) << arrCustomer[i].order.itemKg << setw(10) << right << parseTime(arrCustomer[i].order.timeDone) << endl;
         }
     }
 }
 
-void showDetailTransaction(int indexVector) {
-    Laundry &detailOrder = arrCustomer[indexVector - 1].order;
+void showDetailTransaction(vector<Customer> &arrCustomer, int indexVector) {
+    Customer &dataCustomer = arrCustomer[indexVector - 1];
+    Laundry &dataLaundry = dataCustomer.order;
     cout << "Detail Customer" << endl;
-    cout << "Nama       : " << arrCustomer[indexVector - 1].name << endl;
-    cout << "Alamat     : " << arrCustomer[indexVector - 1].address << endl;
-    cout << "Nomor HP   : " << arrCustomer[indexVector - 1].phone << endl;
+    cout << "Nama       : " << dataCustomer.name << endl;
+    cout << "Alamat     : " << dataCustomer.address << endl;
+    cout << "Nomor HP   : " << dataCustomer.phone << endl;
     cout << "Detail Pesanan" << endl;
-    cout << "Jumlah Pakaian     : " << detailOrder.number << endl;
-    cout << "Deskripsi Pakaian  : " << detailOrder.description << endl;
-    cout << "Berat Pakaian (Kg) : " << detailOrder.itemKg << endl;
-    cout << "Pilihan Paket      : " << detailOrder.variant << endl;
-    cout << "Total Harga        : " << detailOrder.priceLaundry << endl;
-    cout << "Tanggal Order      : " << parseTime(detailOrder.timeOrder) << endl;
-    cout << "Deadline Laundry   : " << parseTime(detailOrder.timeDone) << endl;
+    cout << "Jumlah Pakaian     : " << dataLaundry.number << endl;
+    cout << "Deskripsi Pakaian  : " << dataLaundry.description << endl;
+    cout << "Berat Pakaian (Kg) : " << dataLaundry.itemKg << endl;
+    cout << "Pilihan Paket      : " << dataLaundry.variant << endl;
+    cout << "Total Harga        : " << dataLaundry.priceLaundry << endl;
+    cout << "Tanggal Order      : " << parseTime(dataLaundry.timeOrder) << endl;
+    cout << "Deadline Laundry   : " << parseTime(dataLaundry.timeDone) << endl;
 }
 
 int main() {
+    vector<Customer> arrCustomer;
     int choice;
+    string choiceStr;
     int timeInDay = 24 * 60 * 60;
     string userSearch;
     Customer dataCustomer;
@@ -158,7 +136,7 @@ int main() {
          << "Silahkan Pilih Menu : ";
     cin >> choice;
 
-    readData();
+    readData(arrCustomer);
 
     if (choice == 1) {
         cout << "Silahkan Masukkan Data Pelanggan" << endl;
@@ -167,10 +145,10 @@ int main() {
         getline(cin, dataCustomer.name);
         cout << "Alamat     : ";
         getline(cin, dataCustomer.address);
-        cout << "Nomor HP   : ";
         do {
+            cout << "Nomor HP   : ";
             getline(cin, dataCustomer.phone);
-        } while (customerPhone.length() >= 14);
+        } while (dataCustomer.phone.length() >= 14);
 
         Laundry &dataLaundry = dataCustomer.order;
         cout << "Silahkan Masukkan Data Pakaian" << endl;
@@ -193,20 +171,20 @@ int main() {
             dataLaundry.priceLaundry = 5000 * dataLaundry.itemKg;
             dataLaundry.timeDone = timeInDay * 1;
         } else if (dataLaundry.variant == 2) {
-            priceLaundry = 3000 * itemKg;
+            dataLaundry.priceLaundry = 3000 * dataLaundry.itemKg;
             dataLaundry.timeDone = timeInDay * 2;
         } else if (dataLaundry.variant == 3) {
-            priceLaundry = 2000 * itemKg;
+            dataLaundry.priceLaundry = 2000 * dataLaundry.itemKg;
             dataLaundry.timeDone = timeInDay * 5;
         }
         cout << "Total Harga Adalah " << dataLaundry.priceLaundry << endl;
         dataLaundry.timeOrder = time(0);
         dataLaundry.timeDone += dataLaundry.timeOrder;
         arrCustomer.push_back(dataCustomer);
-        saveData();
+        saveData(arrCustomer);
     } else if (choice == 2) {
         cout << "Table Daftar Pesanan : " << endl;
-        showTransaction();
+        showTransaction(arrCustomer);
         do {
             cout << "Fitur : " << endl
                  << "1. Cari Data" << endl
@@ -218,19 +196,19 @@ int main() {
                 cout << "Masukkan Nama / Nomor HP / Alamat : ";
                 cin.ignore();
                 getline(cin, userSearch);
-                showTransaction(userSearch);
+                showTransaction(arrCustomer, userSearch);
             } else if (choice == 2) {
                 cout << "Masukkan Nomor Pesanan : ";
                 cin >> choice;
-                showDetailTransaction(choice);
+                showDetailTransaction(arrCustomer, choice);
             }
         } while (choice != 0);
     } else if (choice == 3) {
         cout << "Table Daftar Pesanan" << endl;
-        showTransaction();
+        showTransaction(arrCustomer);
         cout << "Pilih Data : ";
         cin >> choice;
-        showDetailTransaction(choice);
+        showDetailTransaction(arrCustomer, choice);
         do {
             cout << "Data Yang Ingin Diubah : " << endl;
             cout << "1. Nama" << endl;
@@ -271,27 +249,34 @@ int main() {
                 cin >> arrCustomer[choice - 1].order.variant;
                 if (arrCustomer[choice - 1].order.variant == 1) {
                     arrCustomer[choice - 1].order.priceLaundry = 5000 * arrCustomer[choice - 1].order.itemKg;
-                    timeDone = timeInDay * 1;
+                    arrCustomer[choice - 1].order.timeDone = timeInDay * 1;
                 } else if (arrCustomer[choice - 1].order.variant == 2) {
                     arrCustomer[choice - 1].order.priceLaundry = 3000 * arrCustomer[choice - 1].order.itemKg;
-                    timeDone = timeInDay * 2;
+                    arrCustomer[choice - 1].order.timeDone = timeInDay * 2;
                 } else if (arrCustomer[choice - 1].order.variant == 3) {
                     arrCustomer[choice - 1].order.priceLaundry = 2000 * arrCustomer[choice - 1].order.itemKg;
-                    timeDone = timeInDay * 5;
+                    arrCustomer[choice - 1].order.timeDone = timeInDay * 5;
                 }
 
                 cout << "Total Harga Adalah " << arrCustomer[choice - 1].order.priceLaundry << endl;
-                arrCustomer[choice - 1].order.timeDone = arrCustomer[choice - 1].order.timeOrder + timeDone;
+                arrCustomer[choice - 1].order.timeDone += arrCustomer[choice - 1].order.timeOrder;
             }
-            saveData();
+            saveData(arrCustomer);
         } while (choice != 0);
     } else if (choice == 4) {
         cout << "Table Daftar Pesanan" << endl;
-        showTransaction();
+        showTransaction(arrCustomer);
         cout << "Pilih Data Yang Ingin Dihapus: ";
         cin >> choice;
-        arrCustomer.erase(arrCustomer.begin() + choice);
-        saveData();
+        showDetailTransaction(arrCustomer, choice);
+        cout << "Apakah anda yakin ingin menghapus ? (Y/N) : ";
+        cin.ignore();
+        getline(cin, choiceStr);
+        if (toupper(choiceStr[0]) == 'Y') {
+            arrCustomer.erase(arrCustomer.begin() + choice);
+            saveData(arrCustomer);
+            cout << "Data Berhasil Dihapus" << endl;
+        }
     }
     return 0;
 }
