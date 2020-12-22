@@ -35,6 +35,7 @@ void readData(vector<Customer> &);
 void saveData(vector<Customer> &);
 void showTransaction(vector<Customer> &, string = "");
 void showDetailTransaction(vector<Customer> &, int);
+void sortingVector(vector<Customer> &, int &);
 
 int main() {
     vector<Customer> arrCustomer;
@@ -106,6 +107,7 @@ int main() {
                 cout << "Fitur : " << endl
                      << "1. Cari Data" << endl
                      << "2. Lihat detail data" << endl
+                     << "3. Urutkan data" << endl
                      << "0. Keluar" << endl
                      << "Pilih : ";
                 cin >> choice;
@@ -118,7 +120,16 @@ int main() {
                     cout << "Masukkan Nomor Pesanan : ";
                     cin >> choice;
                     showDetailTransaction(arrCustomer, choice);
+                } else if (choice == 3) {
+                    cout << "1. Nama " << endl
+                         << "2. Berat" << endl
+                         << "3. Batas Tanggal" << endl
+                         << "Urutkan berdasarkan [1-3] : ";
+                    cin >> choice;
+                    sortingVector(arrCustomer, choice);
+                    showTransaction(arrCustomer);
                 }
+
             } while (choice != 0);
         } else if (choice == 3) {
             cout << "Table Daftar Pesanan" << endl;
@@ -292,4 +303,24 @@ void showDetailTransaction(vector<Customer> &arrCustomer, int indexVector) {
     cout << "Total Harga        : " << dataLaundry.priceLaundry << endl;
     cout << "Tanggal Order      : " << parseTime(dataLaundry.timeOrder) << endl;
     cout << "Deadline Laundry   : " << parseTime(dataLaundry.timeDone) << endl;
+}
+
+void sortingVector(vector<Customer> &arrCustomer, int &mode) {
+    for (int i = 0; i < arrCustomer.size() - 1; i++) {
+        for (int j = 0; j < arrCustomer.size() - i - 1; j++) {
+            if (mode == 1) {
+                if (arrCustomer[j].name > arrCustomer[j + 1].name) {
+                    swap(arrCustomer[j], arrCustomer[j + 1]);
+                }
+            } else if (mode == 2) {
+                if (arrCustomer[j].order.itemKg > arrCustomer[j + 1].order.itemKg) {
+                    swap(arrCustomer[j], arrCustomer[j + 1]);
+                }
+            } else if (mode == 3) {
+                if (arrCustomer[j].order.timeDone > arrCustomer[j + 1].order.timeDone) {
+                    swap(arrCustomer[j], arrCustomer[j + 1]);
+                }
+            }
+        }
+    }
 }
