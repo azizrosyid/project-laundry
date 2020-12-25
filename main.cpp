@@ -38,6 +38,7 @@ void showDetailTransaction(vector<Customer> &, int);
 void sortingVector(vector<Customer> &, int &);
 
 int main() {
+    Customer arrCustomer1[100];
     vector<Customer> arrCustomer;
     int choice;
     string choiceStr;
@@ -45,8 +46,8 @@ int main() {
     string userSearch;
     Customer dataCustomer;
 
+    readData(arrCustomer);
     do {
-        readData(arrCustomer);
         cout << "Selamat Datang di Laundry" << endl
              << "1. Tambah Pesanan" << endl
              << "2. Lihat daftar Pesanan" << endl
