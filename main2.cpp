@@ -112,7 +112,34 @@ int main() {
                 }
             } while (choice != 99);
         } else if (choice == 3) {
-            // TODO tambahkan menu no 3
+            cout << "Table Daftar Pesanan" << endl;
+            showTransaction();
+            cout << "Pilih Data : ";
+            cin >> choice;
+            do {
+                cout << "Data Yang Ingin Diubah : " << endl;
+                cout << "1. Nama" << endl;            
+                cout << "2. Nomor HP" << endl;                                
+                cout << "3. Berat Pakaian (Kg)" << endl;
+                cout << "99. Keluar" << endl;
+                cout << "Pilih Data : ";
+                cin >> choice;
+                cin.ignore();
+                if (choice == 1) {
+                    cout << "Nama : ";
+                    getline(cin, customerName[choice - 1]);
+                } else if (choice == 2) {
+                    cout << "Nomor HP : ";
+                    getline(cin, customerPhone[choice - 1]);
+                } else if (choice == 3) {
+                    cout << "Berat Pakaian (Kg) : ";
+                    cin >> laundryKg[choice - 1]);
+                    laundryPrice[choice - 1] = laundryKg[choice - 1] * pricePerKg;
+                    cin.ignore();
+                    cout << "Total Harga Adalah " << laundryPrice[choice - 1] << endl;
+                    cin.ignore();
+                }
+        } while (choice != 99)
         } else if (choice == 4) {
             cout << "Table Daftar Pesanan" << endl;
             showTransaction();
@@ -126,7 +153,7 @@ int main() {
                 cout << "Data Berhasil Dihapus" << endl;
             }
         }
-    } while (choice != 0);
+    } while (choice != 99);
 
     return 0;
 }
