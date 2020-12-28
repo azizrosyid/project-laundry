@@ -1,5 +1,6 @@
 #include <iomanip>
 #include <iostream>
+#include <limits>
 #define MAX_SIZE 100
 using namespace std;
 
@@ -63,10 +64,12 @@ int main() {
              << "2. Lihat daftar Pesanan" << endl
              << "3. Edit Pesanan" << endl
              << "4. Hapus Pesanan" << endl
-             << "0. Keluar" << endl
-             << "Silahkan Pilih Menu : ";
-        // TODO validasi disini
-        cin >> choice;
+             << "0. Keluar" << endl;
+        while (cout << "Silahkan Pilih Menu : " && !(cin >> choice)){
+    	cout << "Anda salah input, ulangi sampai benar " << endl;
+    	cin.clear();
+    	cin.ignore(numeric_limits<streamsize>::max(), '\n');
+		}
         if (choice == 1) {
             cout << "Silahkan Masukkan Data Pelanggan" << endl;
             cin.ignore();
@@ -94,10 +97,12 @@ int main() {
                 cout << "Fitur : " << endl
                      << "1. Cari Data" << endl
                      << "2. Urutkan data" << endl
-                     << "99. Keluar" << endl
-                     << "Pilih : ";
-                // TODO tambahkan validasi
-                cin >> choice;
+                     << "99. Keluar" << endl;
+                while (cout << "Pilih : " && !(cin >> choice)){
+    				cout << "Anda salah input, ulangi sampai benar " << endl;
+    				cin.clear();
+    				cin.ignore(numeric_limits<streamsize>::max(), '\n');
+					}
                 if (choice == 1) {
                     cout << "Masukkan Nama / Nomor HP : ";
                     cin.ignore();
@@ -125,9 +130,11 @@ int main() {
                 cout << "2. Nomor HP" << endl;
                 cout << "3. Berat Pakaian (Kg)" << endl;
                 cout << "99. Keluar" << endl;
-                cout << "Pilih Data : ";
-                cin >> choice;
-                cin.ignore();
+                while (cout << "Pilih Data : " && !(cin >> choice)){
+    				cout << "Anda salah input, ulangi sampai benar " << endl;
+    				cin.clear();
+    				cin.ignore(numeric_limits<streamsize>::max(), '\n');
+					}
                 if (choice == 1) {
                     cout << "Nama : ";
                     getline(cin, customerName[index]);
