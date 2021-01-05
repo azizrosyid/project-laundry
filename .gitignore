@@ -44,7 +44,7 @@
 
 # End of https://www.toptal.com/developers/gitignore/api/vscode,c++
 
-tempCodeRunnerFile.cpp
+tempCodeRunnerFile.*
 paste.txt
 laundry.txt
 createDummyData.py
