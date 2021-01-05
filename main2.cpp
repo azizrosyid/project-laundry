@@ -9,21 +9,46 @@ string customerPhone[MAX_SIZE];
 int laundryKg[MAX_SIZE];
 int laundryPrice[MAX_SIZE];
 int length = 0;
+const int pricePerKg = 3500;
 
-void showTransaction(const string &searchValue = "") {
-    cout << left << setw(5) << "No." << setw(17) << "Nama" << setw(15) << "Nomor HP" << setw(15) << "Berat (Kg)" << setw(15) << right << "Harga Laundry" << endl;
-    for (int i = 0; i < length; i++) {
-        if (customerName[i].find(searchValue) != -1 || customerPhone[i].find(searchValue) != -1) {
-            cout << left << setw(5) << i + 1 << setw(17) << customerName[i].substr(0, 15) << setw(15) << customerPhone[i] << setw(15) << laundryKg[i] << setw(15) << right << laundryPrice[i] << endl;
+void showTransaction();
+void deleteElemArray(const int &);
+int inputInteger(string);
+void menu();
+void addTransaction();
+void editTransaction();
+void deleteTransaction();
+
+int main() {
+    int choice;
+    string userSearch;
+    do {
+        menu();
+        choice = inputInteger("Pilih : ");
+        cin.ignore();
+        if (choice == 1) {
+            addTransaction();
+            cin.ignore();
+        } else if (choice == 2) {
+            showTransaction();
+            cin.ignore();
+        } else if (choice == 3) {
+            editTransaction();
+            cin.ignore();
+        } else if (choice == 4) {
+            deleteTransaction();
         }
-    }
+    } while (choice != 0);
+
+    return 0;
 }
 
-void swapElemArray(const int &index1, const int &index2) {
-    swap(customerName[index1], customerName[index2]);
-    swap(customerPhone[index1], customerPhone[index2]);
-    swap(laundryKg[index1], laundryKg[index2]);
-    swap(laundryPrice[index1], laundryPrice[index2]);
+void showTransaction() {
+    cout << "Table Daftar Pesanan : " << endl;
+    cout << left << setw(5) << "No." << setw(17) << "Nama" << setw(15) << "Nomor HP" << setw(15) << "Berat (Kg)" << setw(15) << right << "Harga Laundry" << endl;
+    for (int i = 0; i < length; i++) {
+        cout << left << setw(5) << i + 1 << setw(17) << customerName[i].substr(0, 15) << setw(15) << customerPhone[i] << setw(15) << laundryKg[i] << setw(15) << right << laundryPrice[i] << endl;
+    }
 }
 
 void deleteElemArray(const int &choice) {
@@ -36,134 +61,112 @@ void deleteElemArray(const int &choice) {
     length--;
 }
 
-void sortingArray(const int &mode) {
-    for (int i = 0; i < length; i++) {
-        for (int j = 0; j < length - i - 1; j++) {
-            if (mode == 1) {
-                if (customerName[j] > customerName[j + 1]) {
-                    swapElemArray(j, j + 1);
-                }
-            } else if (mode == 2) {
-                if (laundryPrice[j] > laundryPrice[j + 1]) {
-                    swapElemArray(j, j + 1);
-                }
-            }
-        }
+int inputInteger(string message) {
+    int result;
+    while (cout << message && !(cin >> result)) {
+        cout << "Anda salah input, ulangi sampai benar " << endl;
+        cin.clear();
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
     }
+    return result;
 }
 
-int main() {
-    const int pricePerKg = 3500;
-    int choice;
+void countPrice(int *itemLaundryPrice, int *itemLaundryKg) {
+    int discount = 0;
+    if (*itemLaundryKg > 10) {
+        cout << "Anda mendapatkan diskon 10000" << endl;
+        discount = 10000;
+    }
+    *itemLaundryPrice = *itemLaundryKg * pricePerKg - discount;
+}
+
+void menu() {
+    cout << "Selamat Datang di Laundry" << endl
+         << "1. Tambah Pesanan" << endl
+         << "2. Lihat daftar Pesanan" << endl
+         << "3. Edit Pesanan" << endl
+         << "4. Hapus Pesanan" << endl
+         << "0. Keluar" << endl;
+}
+
+void addTransaction() {
+    cout << "Silahkan Masukkan Data Pelanggan" << endl;
+    cout << "Nama       : ";
+    getline(cin, customerName[length]);
+    cout << "Nomor HP   : ";
+    getline(cin, customerPhone[length]);
+
+    cout << "Silahkan Masukkan Data Pakaian" << endl;
+    cout << "Berat Pakaian (Kg) : ";
+    laundryKg[length] = inputInteger("");
+    countPrice(&laundryPrice[length], &laundryKg[length]);
+    cin.ignore();
+
+    cout << "Total Harga Adalah " << laundryPrice[length] << endl;
+    length++;
+}
+
+void editTransaction() {
     int index;
-    string choiceStr;
-    string userSearch;
-    do {
-        cout << "Selamat Datang di Laundry" << endl
-             << "1. Tambah Pesanan" << endl
-             << "2. Lihat daftar Pesanan" << endl
-             << "3. Edit Pesanan" << endl
-             << "4. Hapus Pesanan" << endl
-             << "0. Keluar" << endl;
-        while (cout << "Silahkan Pilih Menu : " && !(cin >> choice)){
-    	cout << "Anda salah input, ulangi sampai benar " << endl;
-    	cin.clear();
-    	cin.ignore(numeric_limits<streamsize>::max(), '\n');
-		}
-        if (choice == 1) {
-            cout << "Silahkan Masukkan Data Pelanggan" << endl;
+    int choice;
+    showTransaction();
+    cout << "Pilih Data : ";
+    index = inputInteger("") - 1;
+    if (index >= 0 && index <= length - 1) {
+        do {
+            cout << "Data Yang Ingin Diubah : " << endl;
+            cout << "1. Nama" << endl;
+            cout << "2. Nomor HP" << endl;
+            cout << "3. Berat Pakaian (Kg)" << endl;
+            cout << "0. Keluar" << endl;
+            choice = inputInteger("Pilih : ");
             cin.ignore();
-            cout << "Nama       : ";
-            getline(cin, customerName[length]);
-            do {
-                cout << "Nomor HP   : ";
-                getline(cin, customerPhone[length]);
-            } while (customerPhone[length].length() >= 14);
-
-            cout << "Silahkan Masukkan Data Pakaian" << endl;
-            cout << "Berat Pakaian (Kg) : ";
-            // TODO validasi disini
-            cin >> laundryKg[length];
-            laundryPrice[length] = laundryKg[length] * pricePerKg;
-            cin.ignore();
-
-            cout << "Total Harga Adalah " << laundryPrice[length] << endl;
-            length++;
-            cin.ignore();
-        } else if (choice == 2) {
-            cout << "Table Daftar Pesanan : " << endl;
-            showTransaction();
-            do {
-                cout << "Fitur : " << endl
-                     << "1. Cari Data" << endl
-                     << "2. Urutkan data" << endl
-                     << "99. Keluar" << endl;
-                while (cout << "Pilih : " && !(cin >> choice)){
-    				cout << "Anda salah input, ulangi sampai benar " << endl;
-    				cin.clear();
-    				cin.ignore(numeric_limits<streamsize>::max(), '\n');
-					}
-                if (choice == 1) {
-                    cout << "Masukkan Nama / Nomor HP : ";
-                    cin.ignore();
-                    getline(cin, userSearch);
-                    showTransaction(userSearch);
-                } else if (choice == 2) {
-                    cout << "1. Nama " << endl
-                         << "2. Harga" << endl
-                         << "Urutkan berdasarkan [1-2] : ";
-                    // TODO tambahkan validasi
-                    cin >> choice;
-                    sortingArray(choice);
-                    showTransaction();
-                }
-            } while (choice != 99);
-        } else if (choice == 3) {
-            cout << "Table Daftar Pesanan" << endl;
-            showTransaction();
-            cout << "Pilih Data : ";
-            cin >> choice;
-            index = choice - 1;
-            do {
-                cout << "Data Yang Ingin Diubah : " << endl;
-                cout << "1. Nama" << endl;
-                cout << "2. Nomor HP" << endl;
-                cout << "3. Berat Pakaian (Kg)" << endl;
-                cout << "99. Keluar" << endl;
-                while (cout << "Pilih Data : " && !(cin >> choice)){
-    				cout << "Anda salah input, ulangi sampai benar " << endl;
-    				cin.clear();
-    				cin.ignore(numeric_limits<streamsize>::max(), '\n');
-					}
-                if (choice == 1) {
+            switch (choice) {
+                case 1:
                     cout << "Nama : ";
                     getline(cin, customerName[index]);
-                } else if (choice == 2) {
+                    break;
+                case 2:
                     cout << "Nomor HP : ";
                     getline(cin, customerPhone[index]);
-                } else if (choice == 3) {
+                    break;
+                case 3:
                     cout << "Berat Pakaian (Kg) : ";
                     cin >> laundryKg[index];
-                    laundryPrice[index] = laundryKg[index] * pricePerKg;
+                    countPrice(&laundryPrice[length], &laundryKg[length]);
                     cin.ignore();
                     cout << "Total Harga Adalah " << laundryPrice[index] << endl;
                     cin.ignore();
-                }
-            } while (choice != 99);
-        } else if (choice == 4) {
-            cout << "Table Daftar Pesanan" << endl;
-            showTransaction();
-            cout << "Pilih Data Yang Ingin Dihapus: ";
-            cin >> choice;
-            cout << "Apakah anda yakin ingin menghapus ? (Y/N) : ";
-            cin.ignore();
-            getline(cin, choiceStr);
-            if (toupper(choiceStr[0]) == 'Y') {
-                deleteElemArray(choice);
-                cout << "Data Berhasil Dihapus" << endl;
+                    break;
+                case 0:
+                    break;
+                default:
+                    cout << "Pilihan Tidak Ada" << endl;
+                    break;
             }
-        }
-    } while (choice != 0);
+        } while (choice != 0);
+    } else {
+        cout << "Pilihan Tidak Ada" << endl;
+    }
+}
 
-    return 0;
+void deleteTransaction() {
+    string strChoice;
+    int choice;
+    showTransaction();
+    cout << "Pilih Data Yang Ingin Dihapus: ";
+    choice = inputInteger("");
+    if (choice >= 0 && choice <= length) {
+        cout << "Apakah anda yakin ingin menghapus ? (Y/N) : ";
+        cin.ignore();
+        getline(cin, strChoice);
+        if (toupper(strChoice[0]) == 'Y') {
+            deleteElemArray(choice);
+            cout << "Data Berhasil Dihapus" << endl;
+        } else {
+            cout << "Data Tidak Dihapus" << endl;
+        }
+    } else {
+        cout << "Pilihan Tidak Ada" << endl;
+    }
 }
