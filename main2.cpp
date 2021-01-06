@@ -133,7 +133,7 @@ void editTransaction() {
                 case 3:
                     cout << "Berat Pakaian (Kg) : ";
                     cin >> laundryKg[index];
-                    countPrice(&laundryPrice[length], &laundryKg[length]);
+                    countPrice(&laundryPrice[index], &laundryKg[index]);
                     cin.ignore();
                     cout << "Total Harga Adalah " << laundryPrice[index] << endl;
                     cin.ignore();
