@@ -11,17 +11,16 @@ int laundryPrice[MAX_SIZE];
 int length = 0;
 const int pricePerKg = 3500;
 
-void showTransaction();
 void deleteElemArray(const int &);
 int inputInteger(string);
 void menu();
 void addTransaction();
+void showTransaction();
 void editTransaction();
 void deleteTransaction();
 
 int main() {
     int choice;
-    string userSearch;
     do {
         menu();
         choice = inputInteger("Pilih : ");
@@ -41,14 +40,6 @@ int main() {
     } while (choice != 0);
 
     return 0;
-}
-
-void showTransaction() {
-    cout << "Table Daftar Pesanan : " << endl;
-    cout << left << setw(5) << "No." << setw(17) << "Nama" << setw(15) << "Nomor HP" << setw(15) << "Berat (Kg)" << setw(15) << right << "Harga Laundry" << endl;
-    for (int i = 0; i < length; i++) {
-        cout << left << setw(5) << i + 1 << setw(17) << customerName[i].substr(0, 15) << setw(15) << customerPhone[i] << setw(15) << laundryKg[i] << setw(15) << right << laundryPrice[i] << endl;
-    }
 }
 
 void deleteElemArray(const int &choice) {
@@ -104,6 +95,14 @@ void addTransaction() {
 
     cout << "Total Harga Adalah " << laundryPrice[length] << endl;
     length++;
+}
+
+void showTransaction() {
+    cout << "Table Daftar Pesanan : " << endl;
+    cout << left << setw(5) << "No." << setw(17) << "Nama" << setw(15) << "Nomor HP" << setw(15) << "Berat (Kg)" << setw(15) << right << "Harga Laundry" << endl;
+    for (int i = 0; i < length; i++) {
+        cout << left << setw(5) << i + 1 << setw(17) << customerName[i] << setw(15) << customerPhone[i] << setw(15) << laundryKg[i] << setw(15) << right << laundryPrice[i] << endl;
+    }
 }
 
 void editTransaction() {
