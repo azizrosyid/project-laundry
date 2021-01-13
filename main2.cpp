@@ -1,9 +1,9 @@
 #include <iomanip>
 #include <iostream>
-#include <limits>
 #define MAX_SIZE 100
 using namespace std;
 
+// deklarasi variable global
 string customerName[MAX_SIZE];
 string customerPhone[MAX_SIZE];
 int laundryKg[MAX_SIZE];
@@ -11,7 +11,9 @@ int laundryPrice[MAX_SIZE];
 int length = 0;
 const int pricePerKg = 3500;
 
+// deklarasi fungsi
 void deleteElemArray(const int &);
+void countPrice(int *, int *);
 int inputInteger(string);
 void menu();
 void addTransaction();
@@ -42,6 +44,26 @@ int main() {
     return 0;
 }
 
+void menu() {
+    system("cls");
+    cout << "Selamat Datang di Laundry" << endl
+         << "1. Tambah Pesanan" << endl
+         << "2. Lihat daftar Pesanan" << endl
+         << "3. Edit Pesanan" << endl
+         << "4. Hapus Pesanan" << endl
+         << "0. Keluar" << endl;
+}
+
+int inputInteger(string message) {
+    int result;
+    while (cout << message && !(cin >> result)) {
+        cout << "Anda salah input, ulangi sampai benar " << endl;
+        cin.clear();
+        cin.ignore(1000, '\n');
+    }
+    return result;
+}
+
 void deleteElemArray(const int &choice) {
     for (int i = choice - 1; i < length; i++) {
         customerName[i] = customerName[i + 1];
@@ -50,16 +72,6 @@ void deleteElemArray(const int &choice) {
         laundryPrice[i] = laundryPrice[i + 1];
     }
     length--;
-}
-
-int inputInteger(string message) {
-    int result;
-    while (cout << message && !(cin >> result)) {
-        cout << "Anda salah input, ulangi sampai benar " << endl;
-        cin.clear();
-        cin.ignore(numeric_limits<streamsize>::max(), '\n');
-    }
-    return result;
 }
 
 void countPrice(int *itemLaundryPrice, int *itemLaundryKg) {
@@ -71,16 +83,8 @@ void countPrice(int *itemLaundryPrice, int *itemLaundryKg) {
     *itemLaundryPrice = *itemLaundryKg * pricePerKg - discount;
 }
 
-void menu() {
-    cout << "Selamat Datang di Laundry" << endl
-         << "1. Tambah Pesanan" << endl
-         << "2. Lihat daftar Pesanan" << endl
-         << "3. Edit Pesanan" << endl
-         << "4. Hapus Pesanan" << endl
-         << "0. Keluar" << endl;
-}
-
 void addTransaction() {
+    system("cls");
     cout << "Silahkan Masukkan Data Pelanggan" << endl;
     cout << "Nama       : ";
     getline(cin, customerName[length]);
@@ -98,6 +102,7 @@ void addTransaction() {
 }
 
 void showTransaction() {
+    system("cls");
     cout << "Table Daftar Pesanan : " << endl;
     cout << left << setw(5) << "No." << setw(17) << "Nama" << setw(15) << "Nomor HP" << setw(15) << "Berat (Kg)" << setw(15) << right << "Harga Laundry" << endl;
     for (int i = 0; i < length; i++) {
@@ -106,6 +111,7 @@ void showTransaction() {
 }
 
 void editTransaction() {
+    system("cls");
     int index;
     int choice;
     showTransaction();
@@ -150,11 +156,11 @@ void editTransaction() {
 }
 
 void deleteTransaction() {
+    system("cls");
     string strChoice;
     int choice;
     showTransaction();
-    cout << "Pilih Data Yang Ingin Dihapus: ";
-    choice = inputInteger("");
+    choice = inputInteger("Pilih Data Yang Ingin Dihapus: ");
     if (choice >= 0 && choice <= length) {
         cout << "Apakah anda yakin ingin menghapus ? (Y/N) : ";
         cin.ignore();
